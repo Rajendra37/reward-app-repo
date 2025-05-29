@@ -3,29 +3,47 @@
     "customerId": "C001",
     "transactionId": "T00101",
     "amount": 187.7,
-    "date": "2025-01-27"
+    "date": "2025-05-27"
+  },
+   {
+    "customerId": "C001",
+    "transactionId": "T00102",
+    "amount": 109.31,
+    "date": "2025-05-27"
+  },
+   {
+    "customerId": "C001",
+    "transactionId": "T00103",
+    "amount": 185.75,
+    "date": "2025-04-27"
+  },
+   {
+    "customerId": "C001",
+    "transactionId": "T00104",
+    "amount": 165.53,
+    "date": "2025-03-27"
   },
   {
     "customerId": "C001",
-    "transactionId": "T00102",
+    "transactionId": "T00105",
     "amount": 129.48,
     "date": "2025-02-16"
   },
   {
     "customerId": "C001",
-    "transactionId": "T00103",
+    "transactionId": "T00106",
     "amount": 179.32,
     "date": "2025-02-16"
   },
   {
     "customerId": "C001",
-    "transactionId": "T00104",
+    "transactionId": "T00107",
     "amount": 34.2,
     "date": "2025-03-23"
   },
   {
     "customerId": "C001",
-    "transactionId": "T00105",
+    "transactionId": "T00108",
     "amount": 68.12,
     "date": "2025-01-17"
   },

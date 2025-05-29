@@ -9,6 +9,6 @@ export const calculateRewardPoints = (amount) => {
     // For every dollar spent over $50 (up to $100), earn 1 point
     points = points + amount - 50;
   }
-
-  return Math.floor(points); // Return the total points as an integer
+  // Return the total points as an integer
+  return Math.floor(points);
 };

@@ -2,10 +2,15 @@ import React, { useEffect, useState } from "react";
 import { fetchTransactions } from "../api/fetchTransactions";
 import CustomerDetails from "./CustomerDetails";
 import "./styles/CustomerList.css";
+import { LABELS } from "../constants/constants";
+import logger from "../loggers";
+import Dropdown from "./Dropdown";
 
 const CustomerList = () => {
   const [customers, setCustomers] = useState([]);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
+
+  const { SELECT_CUSTOMER } = LABELS;
 
   const getTransactions = async () => {
     try {
@@ -22,7 +27,9 @@ const CustomerList = () => {
         transactions: customerMap[customerId],
       }));
       setCustomers(customerList);
+      logger.info("Transactions loaded successfully");
     } catch (error) {
+      logger.info("Error loading transactions", { error });
       console.log(error);
     }
   };
@@ -39,18 +46,15 @@ const CustomerList = () => {
 
   return (
     <div className="customer-list-container">
-      <select
-        className="customer-select"
+      <Dropdown
+        options={customers.map((customer) => ({
+          value: customer.customerId,
+          label: `Customer: ${customer.customerId}`,
+        }))}
         onChange={handleSelectChange}
-        defaultValue=""
-      >
-        <option value="">Select a customer</option>
-        {customers.map((customerData) => (
-          <option key={customerData.customerId} value={customerData.customerId}>
-            {customerData.customerId}
-          </option>
-        ))}
-      </select>
+        placeholder={SELECT_CUSTOMER}
+      />
+
       {selectedCustomer && <CustomerDetails customer={selectedCustomer} />}
     </div>
   );

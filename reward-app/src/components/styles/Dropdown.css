@@ -1,0 +1,26 @@
+.dropdown {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-family: inherit;
+}
+
+.dropdown label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.dropdown select {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  transition: border-color 0.2s ease;
+}
+
+.dropdown select:focus {
+  border-color: #007bff;
+  outline: none;
+}

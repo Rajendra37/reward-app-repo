@@ -1,70 +1,85 @@
-# Getting Started with Create React App
+## Application Screenshot
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Getting Started with Create React App
 
-## Available Scripts
+# Reward App
 
-In the project directory, you can run:
+A React application to view customer reward points based on their transaction history.
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- View a list of customers.
+- Select a customer to see their total reward points.
+- Filter transactions by year, month, or last 3 months.
+- Paginated transaction table with reward points calculation.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Reward Points Calculation
 
-### `npm test`
+- 2 points for every dollar spent over $100 in a single transaction, plus
+- 1 point for every dollar spent over $50 up to $100.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Project Structure
 
-### `npm run build`
+```
+reward-app/
+  public/
+    data/transactions.json   # Sample transaction data
+  src/
+    api/                    # API utilities
+    components/             # React components
+    constants/              # App constants
+    loggers/                # Logging utilities
+    utils/                  # Utility functions
+    App.js                  # Main app component
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Application Working ScreenShots
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+![App Screenshot](public/screenshot1.png)#
+![App Screenshot](public/screenshot2.png)#
+![App Screenshot](public/screenshot3.png)#
+![App Screenshot](public/screenshot4.png)#
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Getting Started
 
-### `npm run eject`
+### Prerequisites
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- Node.js (v23.11.0)
+- npm
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Installation
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+1. Clone the repository:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+   ```sh
+   git clone https://github.com/Rajendra37/reward-app-repo/tree/main/reward-app
+   cd reward-app
+   ```
 
-## Learn More
+2. Install dependencies:
+   ```sh
+   npm install
+   ```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Running the App
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```sh
+npm start
+```
 
-### Code Splitting
+The app will be available at [http://localhost:3000](http://localhost:3000).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Running Tests
 
-### Analyzing the Bundle Size
+```sh
+npm test
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Test Cases Running Scrrenshots
 
-### Making a Progressive Web App
+![App Screenshot](public/screenshot5.png)#
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Customization
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- To modify transaction data, edit [`public/data/transactions.json`](public/data/transactions.json).
+- To change reward calculation logic, update [`src/utils/calculateRewardPoints.js`](src/utils/calculateRewardPoints.js).

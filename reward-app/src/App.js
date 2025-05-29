@@ -3,7 +3,8 @@ import CustomerList from "./components/CustomerList";
 
 function App() {
   return (
-    <div className="App">
+    <div style={{ alignItems: "center", textAlign: "center" }}>
+      <h1>Customer Reward Points</h1>
       <CustomerList />
     </div>
   );
