@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { fetchTransactions } from "../api/fetchTransactions";
 import CustomerDetails from "./CustomerDetails";
 import "./styles/CustomerList.css";
@@ -29,8 +30,8 @@ const CustomerList = () => {
       setCustomers(customerList);
       logger.info("Transactions loaded successfully");
     } catch (error) {
-      logger.info("Error loading transactions", { error });
-      console.log(error);
+      logger.error("Error loading transactions", { error });
+      throw error;
     }
   };
 
@@ -59,5 +60,7 @@ const CustomerList = () => {
     </div>
   );
 };
+
+CustomerList.propTypes = {};
 
 export default CustomerList;

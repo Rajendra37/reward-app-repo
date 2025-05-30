@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
+import PropTypes from "prop-types";
 import { calculateRewardPoints } from "../utils/calculateRewardPoints";
 import { MONTHS, LAST_3_MONTHS_OPTION, LABELS } from "../constants/constants";
 import TransactionTable from "./TransactionTable";
@@ -14,25 +15,27 @@ const CustomerDetails = ({ customer }) => {
   const currentYear = new Date().getFullYear();
 
   const groupTransactionsByYearMonth = (transactions) => {
-    return transactions.reduce((acc, txn) => {
-      const date = new Date(txn.date);
+    return transactions.reduce((accumulator, transaction) => {
+      const date = new Date(transaction.date);
       const year = date.getFullYear();
       const month = date.toLocaleString("default", { month: "long" });
 
-      acc[year] = acc[year] || {};
-      acc[year][month] = acc[year][month] || [];
-      acc[year][month].push(txn);
+      accumulator[year] = accumulator[year] || {};
+      accumulator[year][month] = accumulator[year][month] || [];
+      accumulator[year][month].push(transaction);
 
-      return acc;
+      return accumulator;
     }, {});
   };
 
-  const transactionsByYearMonth = groupTransactionsByYearMonth(
-    customer.transactions
+  const transactionsByYearMonth = useMemo(
+    () => groupTransactionsByYearMonth(customer.transactions),
+    [customer.transactions]
   );
 
-  const years = Array.from({ length: 4 }, (_, i) =>
-    (currentYear - i).toString()
+  const years = useMemo(
+    () => Array.from({ length: 4 }, (_, i) => (currentYear - i).toString()),
+    [currentYear]
   );
 
   useEffect(() => {
@@ -43,25 +46,26 @@ const CustomerDetails = ({ customer }) => {
     setCurrentPage(1);
   }, [selectedMonth, selectedYear]);
 
-  const getLastThreeMonthsTransactions = () => {
+  const lastThreeMonthsTransactions = useMemo(() => {
     const now = new Date();
-    return customer.transactions.filter((txn) => {
-      const txnDate = new Date(txn.date);
+    return customer.transactions.filter((transaction) => {
+      const transactionDate = new Date(transaction.date);
       const diffInMonths =
         now.getFullYear() * 12 +
         now.getMonth() -
-        (txnDate.getFullYear() * 12 + txnDate.getMonth());
+        (transactionDate.getFullYear() * 12 + transactionDate.getMonth());
       return diffInMonths >= 0 && diffInMonths < 3;
     });
-  };
+  }, [customer.transactions]);
 
   const filteredTransactions =
     selectedMonth === LAST_3_MONTHS_OPTION
-      ? getLastThreeMonthsTransactions()
+      ? lastThreeMonthsTransactions
       : transactionsByYearMonth[selectedYear]?.[selectedMonth] || [];
 
   const totalPoints = customer.transactions.reduce(
-    (acc, txn) => acc + calculateRewardPoints(txn.amount),
+    (accumulator, transaction) =>
+      accumulator + calculateRewardPoints(transaction.amount),
     0
   );
 
@@ -78,6 +82,14 @@ const CustomerDetails = ({ customer }) => {
   const handleNextPage = () =>
     setCurrentPage((prev) => Math.min(prev + 1, totalPages));
 
+  const handleYearChange = (e) => {
+    setSelectedYear(e.target.value);
+  };
+
+  const handleMonthChange = (e) => {
+    setSelectedMonth(e.target.value);
+  };
+
   const {
     CUSTOMER_PREFIX,
     TOTAL_REWARD_POINTS,
@@ -91,9 +103,6 @@ const CustomerDetails = ({ customer }) => {
     NO_TRANSACTIONS,
   } = LABELS;
 
-
-  console.log({transactionsByYearMonth})
-  
   return (
     <div className="customer-details">
       <h3>
@@ -105,30 +114,28 @@ const CustomerDetails = ({ customer }) => {
 
       <div style={{ display: "flex", gap: "1rem", justifyContent: "center" }}>
         <Dropdown
-          value={selectedYear}
-          onChange={(e) => setSelectedYear(e.target.value)}
-          options={years}
-          disabled={selectedMonth === LAST_3_MONTHS_OPTION}
-        />
-
-        <Dropdown
           value={selectedMonth}
-          onChange={(e) => setSelectedMonth(e.target.value)}
+          onChange={handleMonthChange}
           options={[
             { value: LAST_3_MONTHS_OPTION, label: LAST_3_MONTHS_LABEL },
             ...MONTHS.map((month) => ({ value: month, label: month })),
           ]}
         />
+        <Dropdown
+          value={selectedYear}
+          onChange={handleYearChange}
+          options={years}
+        />
       </div>
 
       <h4>
         {TRANSACTIONS_HEADER}
-        {selectedMonth === LAST_3_MONTHS_OPTION
-          ? ` ${LAST_3_MONTHS_LABEL}`
-          : ` ${MONTH_YEAR_LABEL(selectedMonth, selectedYear)}`}
+        {(selectedMonth === LAST_3_MONTHS_OPTION &&
+          ` ${LAST_3_MONTHS_LABEL}`) ||
+          ` ${MONTH_YEAR_LABEL(selectedMonth, selectedYear)}`}
       </h4>
 
-      {paginatedTransactions.length > 0 ? (
+      {paginatedTransactions.length > 0 && (
         <>
           <TransactionTable transactions={paginatedTransactions} />
 
@@ -149,11 +156,24 @@ const CustomerDetails = ({ customer }) => {
             </div>
           )}
         </>
-      ) : (
-        <p>{NO_TRANSACTIONS}</p>
       )}
+      {paginatedTransactions.length === 0 && <p>{NO_TRANSACTIONS}</p>}
     </div>
   );
+};
+
+CustomerDetails.propTypes = {
+  customer: PropTypes.shape({
+    customerId: PropTypes.string.isRequired,
+    transactions: PropTypes.arrayOf(
+      PropTypes.shape({
+        date: PropTypes.string.isRequired,
+        amount: PropTypes.number.isRequired,
+        transactionId: PropTypes.string.isRequired,
+        customerId: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+  }).isRequired,
 };
 
 export default CustomerDetails;

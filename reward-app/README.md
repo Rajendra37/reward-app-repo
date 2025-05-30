@@ -33,13 +33,6 @@ reward-app/
     App.js                  # Main app component
 ```
 
-## Application Working ScreenShots
-
-![App Screenshot](public/screenshot1.png)#
-![App Screenshot](public/screenshot2.png)#
-![App Screenshot](public/screenshot3.png)#
-![App Screenshot](public/screenshot4.png)#
-
 ## Getting Started
 
 ### Prerequisites
@@ -75,11 +68,18 @@ The app will be available at [http://localhost:3000](http://localhost:3000).
 npm test
 ```
 
-## Test Cases Running Scrrenshots
-
-![App Screenshot](public/screenshot5.png)#
-
 ## Customization
 
 - To modify transaction data, edit [`public/data/transactions.json`](public/data/transactions.json).
 - To change reward calculation logic, update [`src/utils/calculateRewardPoints.js`](src/utils/calculateRewardPoints.js).
+
+## Application Working ScreenShots
+
+![App Screenshot](public/screenshot1.png)#
+![App Screenshot](public/screenshot2.png)#
+![App Screenshot](public/screenshot3.png)#
+![App Screenshot](public/screenshot4.png)#
+
+## Test Cases Running Scrrenshots
+
+![App Screenshot](public/screenshot5.png)#
